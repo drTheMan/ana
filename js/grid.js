@@ -5,6 +5,10 @@
       this.options = _opts;
     }
 
+    Grid.prototype.position = function() {
+      return this._position || (this._position = this.options.position || new THREE.Vector3(0, 0, 0));
+    };
+
     Grid.prototype.dimensions = function() {
       return this._dimensions || (this._dimensions = this.options.dimensions || new THREE.Vector2(10, 10));
     };
@@ -21,21 +25,39 @@
       return this._cell_size || (this._cell_size = this.options.cell_size || new THREE.Vector3(200, 200, 200));
     };
 
+    Grid.prototype.spacing = function() {
+      return this._spacing || (this._spacing = this.options.spacing || this.cell_size());
+    };
+
+    Grid.prototype.geometry = function() {
+      return this._geometry || (this._geometry = this.options.geometry || new THREE.CubeGeometry(this.cell_size().x, this.cell_size().y, this.cell_size().z));
+    };
+
+    Grid.prototype.materials = function() {
+      return this.options.materials || this._materials || (this._materials = [
+        new THREE.MeshBasicMaterial({
+          color: 0xffffff
+        })
+      ]);
+    };
+
+    Grid.prototype.random_material = function() {
+      return this.materials()[Math.floor(Math.random() * this.materials().length)];
+    };
+
     Grid.prototype.boxes = function() {
       return this._boxes || (this._boxes = this.generateBoxes());
     };
 
     Grid.prototype.generateBoxes = function() {
-      var boxes, geometry, material, x, y, _i, _j, _ref, _ref1;
-      geometry = new THREE.CubeGeometry(200, 200, 200);
-      material = new THREE.MeshBasicMaterial({
-        color: 0x0000ff,
-        wireframe: true
-      });
+      var boxes, mesh, x, y, _i, _j, _ref, _ref1;
       boxes = [];
       for (y = _i = 0, _ref = this.rows() - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; y = 0 <= _ref ? ++_i : --_i) {
         for (x = _j = 0, _ref1 = this.cols() - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
-          boxes.push(new THREE.Mesh(geometry, material));
+          mesh = new THREE.Mesh(this.geometry(), this.random_material());
+          mesh.position.copy(this.position());
+          mesh.position.add(new THREE.Vector3(x * this.spacing().x, y * this.spacing().y, 0));
+          boxes.push(mesh);
         }
       }
       return boxes;
@@ -47,7 +69,7 @@
       _results = [];
       for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
         box = _ref[i];
-        _results.push(box.rotation.x += 0.01 * (i + 1));
+        _results.push(box.rotation.x += 0.001 * (i + 1));
       }
       return _results;
     };
@@ -58,8 +80,6 @@
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         box = _ref[_i];
-        console.log('adding');
-        console.log(box);
         _results.push(scene.add(box));
       }
       return _results;
