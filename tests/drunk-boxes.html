@@ -14,11 +14,11 @@
 		</style>
 	</head>
 	<body>
-		<script src="lib/three.min.js"></script>
+		<script src="../lib/three.min.js"></script>
 
 		<script>
 			var camera, scene, renderer;
-			var geometry, material, mesh, mesh2;
+			var geometry, material, mesh, mesh2, mesh3, mesh4;
 
 			init();
 			animate();
@@ -37,8 +37,13 @@
 
 		    mesh = new THREE.Mesh(geometry, material);
 		    mesh2 = new THREE.Mesh(geometry, material);
+		    mesh3 = new THREE.Mesh(geometry, material);
+		    mesh4 = new THREE.Mesh(geometry, material);
+
 		    scene.add(mesh);
 		    scene.add(mesh2);
+		    scene.add(mesh3);
+		    scene.add(mesh4);
 
 		    renderer = new THREE.CanvasRenderer();
 		    renderer.setSize(window.innerWidth, window.innerHeight);
@@ -54,6 +59,11 @@
 		    mesh.rotation.y += 0.02;
 				mesh2.rotation.x -= 0.01;
 		    mesh2.rotation.y -= 0.02;
+				mesh3.rotation.x += 0.02;
+		    mesh3.rotation.y += 0.01;
+				mesh4.rotation.x -= 0.02;
+		    mesh4.rotation.y -= 0.01;
+
 
 		    renderer.render(scene, camera);
 			}
