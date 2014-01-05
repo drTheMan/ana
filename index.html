@@ -20,8 +20,15 @@
 		<script src="js/grid_disturbance.js"></script>
 		<script src="js/harmony.js"></script>
 		<script>
-			Harmony.init();
-			Harmony.animate();
+			function drawFrame(){
+				requestAnimationFrame(drawFrame);
+				app.update();
+				app.draw();
+			}
+
+			window.app = new Harmony();
+			window.app.init();
+			drawFrame();
 		</script>
 	</body>
 </html>
