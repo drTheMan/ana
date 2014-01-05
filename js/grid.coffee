@@ -26,11 +26,6 @@ class @Grid
 
 		return boxes;
 
-	animateBoxes: ->
-		for box, i in @boxes()
-			box.rotation.x += 0.001*(i+1)
-			# box.rotation.y += (i%3)*0.03
-
 	addBoxesToScene: (scene) ->
 		for box in @boxes()
 			scene.add(box)
