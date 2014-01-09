@@ -37,7 +37,12 @@
         this.app().createDisturbance(VerticalDisturbance);
       }
       if (event.which === 51) {
-        return this.app().createDisturbance(BumpDisturbance);
+        this.app().createDisturbance(BumpDisturbance);
+      }
+      if (event.which === 27) {
+        console.log('[ESC] clearing disturbances array');
+        this.app().disturbances = [];
+        return this.app().grid.reset();
       }
     };
 

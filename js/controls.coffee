@@ -22,8 +22,8 @@ class @Controls
 	keydown: (event ) ->
 		# event.preventDefault()
 		# event.stopPropagation()
-
 		console.log "Keydown (event.which = " + event.which + ")"
+
 		if(event.which == 49) # key '1'
 			@app().createDisturbance GridDisturbance
 		if(event.which == 50)
@@ -31,3 +31,7 @@ class @Controls
 		if(event.which == 51)
 			@app().createDisturbance BumpDisturbance
 
+		if(event.which == 27) # escape
+			console.log '[ESC] clearing disturbances array'
+			@app().disturbances = []
+			@app().grid.reset();

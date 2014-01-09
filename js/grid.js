@@ -80,6 +80,7 @@
 
     Grid.prototype.reset = function() {
       var box, x, y, _i, _ref, _results;
+      console.log("Grid resetting");
       _results = [];
       for (y = _i = 0, _ref = this.rows() - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; y = 0 <= _ref ? ++_i : --_i) {
         _results.push((function() {
