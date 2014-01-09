@@ -35,11 +35,19 @@ class @Harmony
 			if disturbance.done()
 				console.log("Disturbance done, removing after "+disturbance.stepCount()+" steps")
 				@disturbances.splice(i, 1)
+	
+				if @disturbances.length == 0
+					console.log 'No more disturbances left, resetting grid'
+					@grid.reset()
 			else
 				disturbance.step()
+
 
 	draw: ->
 		@renderer.render(@scene, @camera)
 
-	createDisturbance: ->
-		@disturbances.push(new GridDisturbance({grid: @grid}))
+	createDisturbance: (disturbance_klass) ->
+		if !disturbance_klass
+			klasses = [GridDisturbance, VerticalDisturbance, BumpDisturbance]
+			disturbance_klass = klasses[Math.floor(Math.random() * klasses.length)]
+		@disturbances.push(new disturbance_klass({grid: @grid}))

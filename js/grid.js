@@ -63,17 +63,6 @@
       return boxes;
     };
 
-    Grid.prototype.animateBoxes = function() {
-      var box, i, _i, _len, _ref, _results;
-      _ref = this.boxes();
-      _results = [];
-      for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-        box = _ref[i];
-        _results.push(box.rotation.x += 0.001 * (i + 1));
-      }
-      return _results;
-    };
-
     Grid.prototype.addBoxesToScene = function(scene) {
       var box, _i, _len, _ref, _results;
       _ref = this.boxes();
@@ -81,6 +70,31 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         box = _ref[_i];
         _results.push(scene.add(box));
+      }
+      return _results;
+    };
+
+    Grid.prototype.getBoxXY = function(x, y) {
+      return this.boxes()[this.cols() * y + x];
+    };
+
+    Grid.prototype.reset = function() {
+      var box, x, y, _i, _ref, _results;
+      _results = [];
+      for (y = _i = 0, _ref = this.rows() - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; y = 0 <= _ref ? ++_i : --_i) {
+        _results.push((function() {
+          var _j, _ref1, _results1;
+          _results1 = [];
+          for (x = _j = 0, _ref1 = this.cols() - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
+            box = this.getBoxXY(x, y);
+            box.rotation.x = 0;
+            box.rotation.y = 0;
+            box.rotation.z = 0;
+            box.position.copy(this.position());
+            _results1.push(box.position.add(new THREE.Vector3(x * this.spacing().x, y * this.spacing().y, 0)));
+          }
+          return _results1;
+        }).call(this));
       }
       return _results;
     };

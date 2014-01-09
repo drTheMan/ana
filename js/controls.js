@@ -17,13 +17,28 @@
     };
 
     Controls.prototype.setupEventListeners = function() {
-      return document.addEventListener('mousedown', this.bind(this, this.mousedown), false);
+      document.addEventListener('mousedown', this.bind(this, this.mousedown), false);
+      return document.addEventListener('keydown', this.bind(this, this.keydown), false);
     };
 
     Controls.prototype.mousedown = function(event) {
       event.preventDefault();
       event.stopPropagation();
+      console.log("Mousedown");
       return this.app().createDisturbance();
+    };
+
+    Controls.prototype.keydown = function(event) {
+      console.log("Keydown (event.which = " + event.which + ")");
+      if (event.which === 49) {
+        this.app().createDisturbance(GridDisturbance);
+      }
+      if (event.which === 50) {
+        this.app().createDisturbance(VerticalDisturbance);
+      }
+      if (event.which === 51) {
+        return this.app().createDisturbance(BumpDisturbance);
+      }
     };
 
     return Controls;

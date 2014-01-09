@@ -1,6 +1,6 @@
 class @Grid
 	constructor: (_opts) ->
-		@options = _opts;
+		@options = _opts
 
 	position: -> @_position ||= @options.position || new THREE.Vector3(0,0,0)
 	dimensions: -> @_dimensions ||= @options.dimensions || new THREE.Vector2(10, 10)
@@ -29,3 +29,16 @@ class @Grid
 	addBoxesToScene: (scene) ->
 		for box in @boxes()
 			scene.add(box)
+
+	getBoxXY: (x,y) ->
+		@boxes()[@cols()*y+x]
+
+	reset: ->
+		for y in [0..@rows()-1]
+			for x in [0..@cols()-1]
+				box = @getBoxXY(x,y)
+				box.rotation.x = 0
+				box.rotation.y = 0
+				box.rotation.z = 0
+				box.position.copy(@position())
+				box.position.add(new THREE.Vector3(x*@spacing().x, y*@spacing().y, 0))

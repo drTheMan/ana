@@ -49,7 +49,13 @@
         disturbance = _ref[i];
         if (disturbance.done()) {
           console.log("Disturbance done, removing after " + disturbance.stepCount() + " steps");
-          _results.push(this.disturbances.splice(i, 1));
+          this.disturbances.splice(i, 1);
+          if (this.disturbances.length === 0) {
+            console.log('No more disturbances left, resetting grid');
+            _results.push(this.grid.reset());
+          } else {
+            _results.push(void 0);
+          }
         } else {
           _results.push(disturbance.step());
         }
@@ -61,8 +67,13 @@
       return this.renderer.render(this.scene, this.camera);
     };
 
-    Harmony.prototype.createDisturbance = function() {
-      return this.disturbances.push(new GridDisturbance({
+    Harmony.prototype.createDisturbance = function(disturbance_klass) {
+      var klasses;
+      if (!disturbance_klass) {
+        klasses = [GridDisturbance, VerticalDisturbance, BumpDisturbance];
+        disturbance_klass = klasses[Math.floor(Math.random() * klasses.length)];
+      }
+      return this.disturbances.push(new disturbance_klass({
         grid: this.grid
       }));
     };
