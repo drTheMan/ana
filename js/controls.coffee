@@ -1,6 +1,7 @@
 class @Controls
 	constructor: (_opts) ->
 		@options = _opts
+		@initGUI()
 		@setupEventListeners()
 
 	app: -> @options.app
@@ -13,6 +14,7 @@ class @Controls
 		document.addEventListener 'keydown', @bind(this, @keydown), false
 
 	mousedown: ( event ) ->
+		return;
 		event.preventDefault()
 		event.stopPropagation()
 
@@ -38,4 +40,13 @@ class @Controls
 		if event.which == 13 # ENTER
 			@app().renderer.preserveDrawingBuffer = true
 			window.open( @app().renderer.domElement.toDataURL( 'image/png' ), 'screenshot' );
+
+	initGUI: -> 
+		@gui = new dat.GUI() # ({autoPlace:false});
+
+		folder = @gui.addFolder 'Parameters'
+		control = folder.add({gridPosX: -2200}, 'gridPosX', -3000, 0)
+		control.onChange (value) -> console.log "Let's change grid pos to "+value
+
+		@gui.addFolder 'Actions'
 

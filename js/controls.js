@@ -3,6 +3,7 @@
   this.Controls = (function() {
     function Controls(_opts) {
       this.options = _opts;
+      this.initGUI();
       this.setupEventListeners();
     }
 
@@ -22,6 +23,7 @@
     };
 
     Controls.prototype.mousedown = function(event) {
+      return;
       event.preventDefault();
       event.stopPropagation();
       console.log("Mousedown - creating random disturbance");
@@ -50,6 +52,19 @@
         this.app().renderer.preserveDrawingBuffer = true;
         return window.open(this.app().renderer.domElement.toDataURL('image/png'), 'screenshot');
       }
+    };
+
+    Controls.prototype.initGUI = function() {
+      var control, folder;
+      this.gui = new dat.GUI();
+      folder = this.gui.addFolder('Parameters');
+      control = folder.add({
+        gridPosX: -2200
+      }, 'gridPosX', -3000, 0);
+      control.onChange(function(value) {
+        return console.log("Let's change grid pos to " + value);
+      });
+      return this.gui.addFolder('Actions');
     };
 
     return Controls;
