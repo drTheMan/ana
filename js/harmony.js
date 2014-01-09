@@ -43,12 +43,17 @@
 
     Harmony.prototype.update = function() {
       var disturbance, i, _i, _len, _ref, _results;
+      if (this.paused) {
+        return;
+      }
       _ref = this.disturbances;
       _results = [];
       for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
         disturbance = _ref[i];
-        if (disturbance.done()) {
-          console.log("Disturbance done, removing after " + disturbance.stepCount() + " steps");
+        if (disturbance === void 0 || disturbance.done()) {
+          if (disturbance) {
+            console.log("Disturbance done, removing after " + disturbance.stepCount() + " steps");
+          }
           this.disturbances.splice(i, 1);
           if (this.disturbances.length === 0) {
             console.log('No more disturbances left, resetting grid');
@@ -71,6 +76,15 @@
       return this.disturbances.push(new DisturbancePicker({
         grid: this.grid
       }).createDisturbance(disturbance_klass));
+    };
+
+    Harmony.prototype.togglePause = function() {
+      this.paused = this.paused !== true;
+      if (this.paused) {
+        return console.log('Paused');
+      } else {
+        return console.log('Continue');
+      }
     };
 
     return Harmony;

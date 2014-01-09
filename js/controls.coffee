@@ -38,3 +38,5 @@ class @Controls
 			console.log '[ESC] clearing disturbances array'
 			@app().disturbances = []
 			@app().grid.reset();
+
+		@app().togglePause() if event.which == 32

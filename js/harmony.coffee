@@ -31,9 +31,11 @@ class @Harmony
 		return scene
 
 	update: ->
+		return if @paused
+
 		for disturbance, i in @disturbances
-			if disturbance.done()
-				console.log("Disturbance done, removing after "+disturbance.stepCount()+" steps")
+			if disturbance == undefined || disturbance.done()
+				console.log("Disturbance done, removing after "+disturbance.stepCount()+" steps") if disturbance
 				@disturbances.splice(i, 1)
 	
 				if @disturbances.length == 0
@@ -49,7 +51,9 @@ class @Harmony
 	createDisturbance: (disturbance_klass) ->
 		@disturbances.push(new DisturbancePicker({grid: @grid}).createDisturbance(disturbance_klass))
 
-		# if !disturbance_klass
-		# 	klasses = [GridDisturbance, VerticalDisturbance, BumpDisturbance]
-		# 	disturbance_klass = klasses[Math.floor(Math.random() * klasses.length)]
-		# @disturbances.push(new disturbance_klass({grid: @grid}))
+	togglePause: ->
+		@paused = (@paused != true);
+		if @paused
+			console.log 'Paused'
+		else
+			console.log 'Continue'

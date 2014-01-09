@@ -44,7 +44,10 @@
       if (event.which === 27) {
         console.log('[ESC] clearing disturbances array');
         this.app().disturbances = [];
-        return this.app().grid.reset();
+        this.app().grid.reset();
+      }
+      if (event.which === 32) {
+        return this.app().togglePause();
       }
     };
 
