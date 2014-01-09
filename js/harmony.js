@@ -24,8 +24,8 @@
       var scene;
       scene = new THREE.Scene();
       this.grid = new window.Grid({
-        dimensions: new THREE.Vector2(10, 10),
-        position: new THREE.Vector3(-1000, -900, -1000),
+        dimensions: new THREE.Vector2(28, 10),
+        position: new THREE.Vector3(-2600, -900, -1000),
         cell_size: new THREE.Vector3(200, 200, 10),
         materials: [
           new THREE.MeshBasicMaterial({
@@ -70,12 +70,6 @@
 
     Harmony.prototype.draw = function() {
       return this.renderer.render(this.scene, this.camera);
-    };
-
-    Harmony.prototype.createDisturbance = function(disturbance_klass) {
-      return this.disturbances.push(new DisturbancePicker({
-        grid: this.grid
-      }).createDisturbance(disturbance_klass));
     };
 
     Harmony.prototype.togglePause = function() {

@@ -16,7 +16,8 @@ class @Controls
 		event.preventDefault()
 		event.stopPropagation()
 
-		console.log "Mousedown"
+		console.log "Mousedown - creating random disturbance"
+		@app().disturbances.push( new DisturbancePicker({grid: @app().grid}).createDisturbance() )
 		@app().createDisturbance()
 
 	keydown: (event ) ->
@@ -24,15 +25,8 @@ class @Controls
 		# event.stopPropagation()
 		console.log "Keydown (event.which = " + event.which + ")"
 
-		disturbance_keys = {
-			49: GridDisturbance,
-			50: VerticalDisturbance,
-			51: BumpDisturbance,
-			52: CircularDisturbance,
-			53: EqualizerDisturbance
-		}
-
-		@app().createDisturbance(disturbance_keys[event.which]) if disturbance_keys[event.which]			
+		if event.which >= 48 && event.which <= 57
+			@app().disturbances.push( new DisturbancePicker({grid: @app().grid}).indexDisturbance(event.which - 48) ) 
 
 		if(event.which == 27) # escape
 			console.log '[ESC] clearing disturbances array'

@@ -24,22 +24,19 @@
     Controls.prototype.mousedown = function(event) {
       event.preventDefault();
       event.stopPropagation();
-      console.log("Mousedown");
+      console.log("Mousedown - creating random disturbance");
+      this.app().disturbances.push(new DisturbancePicker({
+        grid: this.app().grid
+      }).createDisturbance());
       return this.app().createDisturbance();
     };
 
     Controls.prototype.keydown = function(event) {
-      var disturbance_keys;
       console.log("Keydown (event.which = " + event.which + ")");
-      disturbance_keys = {
-        49: GridDisturbance,
-        50: VerticalDisturbance,
-        51: BumpDisturbance,
-        52: CircularDisturbance,
-        53: EqualizerDisturbance
-      };
-      if (disturbance_keys[event.which]) {
-        this.app().createDisturbance(disturbance_keys[event.which]);
+      if (event.which >= 48 && event.which <= 57) {
+        this.app().disturbances.push(new DisturbancePicker({
+          grid: this.app().grid
+        }).indexDisturbance(event.which - 48));
       }
       if (event.which === 27) {
         console.log('[ESC] clearing disturbances array');

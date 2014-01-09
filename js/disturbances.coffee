@@ -4,7 +4,12 @@ class @DisturbancePicker
 	allClasses: -> [GridDisturbance, VerticalDisturbance, BumpDisturbance, CircularDisturbance, EqualizerDisturbance]	
 	randomClass: -> @allClasses()[Math.floor(Math.random() * @allClasses.length)]
 
+	indexDisturbance: (idx) ->
+		console.log "Creating disturbance from class index "+idx
+		new (@allClasses()[idx])(@options)
+
 	createDisturbance: (klass) ->
+		console.log "Creating random disturbance"
 		new (klass || @randomClass())(@options)
 
 
@@ -46,7 +51,7 @@ class @VerticalDisturbance extends Disturbance
 				@options.grid.getBoxXY(x,y).rotation.y += @speed * (x * @grid().rows() + y)
 
 	done: ->
-		return true if @stepCount() > 0 && @stepCount() * @speed >= Math.PI
+		return true if @stepCount() * @speed >= Math.PI
 		return false
 
 
@@ -58,15 +63,21 @@ class @BumpDisturbance extends Disturbance
 
 
 class @CircularDisturbance extends Disturbance
+	constructor: (_opts) ->
+		super(_opts)
+		console.log("CircularDisturbance position: "+@center().x+", "+@center().y)
+
 	center: -> @_center ||= @grid().randomBox().position;
-	totalSteps: -> @_totalSteps ||= Math.floor(Math.random()*100)
+	totalSteps: -> @_totalSteps ||= Math.floor(Math.random()*500)+100
 	sinStep: -> THREE.PI2 / @totalSteps()
+	sinRoot: -> @_sinRoot ||= Math.random(THREE.PI2)
+	factor: -> @_factor ||= Math.random(0.001) + 0.000001
+	rippleSpeed: -> @_rippleSpeed ||= 0.1
 
 	performStep: -> 
 		for box, i in @grid().boxes()
-			distance_to_center = box.position.distanceTo(@center())
-			# box.position.x += Math.sin(@sinStep() * @stepCount()) * distance_to_center * 0.0001
-			box.position.z += Math.sin(Math.random() * THREE.Math.PI2) * 30
+			amplitude = box.position.distanceTo(@center()) * @factor() * 0.01
+			box.position.z += Math.cos(@rippleSpeed() * @stepCount()) * amplitude
 
 	done: -> @stepCount() >= @totalSteps()
 
