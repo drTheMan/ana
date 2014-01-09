@@ -29,15 +29,17 @@
     };
 
     Controls.prototype.keydown = function(event) {
+      var disturbance_keys;
       console.log("Keydown (event.which = " + event.which + ")");
-      if (event.which === 49) {
-        this.app().createDisturbance(GridDisturbance);
-      }
-      if (event.which === 50) {
-        this.app().createDisturbance(VerticalDisturbance);
-      }
-      if (event.which === 51) {
-        this.app().createDisturbance(BumpDisturbance);
+      disturbance_keys = {
+        49: GridDisturbance,
+        50: VerticalDisturbance,
+        51: BumpDisturbance,
+        52: CircularDisturbance,
+        53: EqualizerDisturbance
+      };
+      if (disturbance_keys[event.which]) {
+        this.app().createDisturbance(disturbance_keys[event.which]);
       }
       if (event.which === 27) {
         console.log('[ESC] clearing disturbances array');

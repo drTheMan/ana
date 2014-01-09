@@ -68,14 +68,9 @@
     };
 
     Harmony.prototype.createDisturbance = function(disturbance_klass) {
-      var klasses;
-      if (!disturbance_klass) {
-        klasses = [GridDisturbance, VerticalDisturbance, BumpDisturbance];
-        disturbance_klass = klasses[Math.floor(Math.random() * klasses.length)];
-      }
-      return this.disturbances.push(new disturbance_klass({
+      return this.disturbances.push(new DisturbancePicker({
         grid: this.grid
-      }));
+      }).createDisturbance(disturbance_klass));
     };
 
     return Harmony;

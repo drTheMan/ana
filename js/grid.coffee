@@ -33,6 +33,8 @@ class @Grid
 	getBoxXY: (x,y) ->
 		@boxes()[@cols()*y+x]
 
+	randomBox: -> @boxes()[Math.floor(Math.random() * @boxes().length)]
+
 	reset: ->
 		console.log "Grid resetting"
 		for y in [0..@rows()-1]

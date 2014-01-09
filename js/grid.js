@@ -78,6 +78,10 @@
       return this.boxes()[this.cols() * y + x];
     };
 
+    Grid.prototype.randomBox = function() {
+      return this.boxes()[Math.floor(Math.random() * this.boxes().length)];
+    };
+
     Grid.prototype.reset = function() {
       var box, x, y, _i, _ref, _results;
       console.log("Grid resetting");

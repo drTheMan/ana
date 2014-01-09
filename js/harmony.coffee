@@ -47,7 +47,9 @@ class @Harmony
 		@renderer.render(@scene, @camera)
 
 	createDisturbance: (disturbance_klass) ->
-		if !disturbance_klass
-			klasses = [GridDisturbance, VerticalDisturbance, BumpDisturbance]
-			disturbance_klass = klasses[Math.floor(Math.random() * klasses.length)]
-		@disturbances.push(new disturbance_klass({grid: @grid}))
+		@disturbances.push(new DisturbancePicker({grid: @grid}).createDisturbance(disturbance_klass))
+
+		# if !disturbance_klass
+		# 	klasses = [GridDisturbance, VerticalDisturbance, BumpDisturbance]
+		# 	disturbance_klass = klasses[Math.floor(Math.random() * klasses.length)]
+		# @disturbances.push(new disturbance_klass({grid: @grid}))
