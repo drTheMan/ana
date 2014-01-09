@@ -8,7 +8,8 @@ class @Grid
 	rows: -> @dimensions().y
 	cell_size: -> @_cell_size ||= @options.cell_size || new THREE.Vector3(200, 200, 200)
 	spacing: -> @_spacing ||= @options.spacing || @cell_size()
-	geometry: -> @_geometry ||= @options.geometry || new THREE.CubeGeometry(@cell_size().x, @cell_size().y, @cell_size().z)
+	# geometry: -> @_geometry ||= @options.geometry || new THREE.CubeGeometry(@cell_size().x, @cell_size().y, @cell_size().z)
+	geometry: -> @_geometry ||= @options.geometry || new THREE.PlaneGeometry(@cell_size().x, @cell_size().y)
 	materials: -> @options.materials || @_materials ||= [new THREE.MeshBasicMaterial({color: 0xffffff})]
 	random_material: -> @materials()[Math.floor(Math.random() * @materials().length)]
 

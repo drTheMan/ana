@@ -44,7 +44,11 @@
         this.app().grid.reset();
       }
       if (event.which === 32) {
-        return this.app().togglePause();
+        this.app().togglePause();
+      }
+      if (event.which === 13) {
+        this.app().renderer.preserveDrawingBuffer = true;
+        return window.open(this.app().renderer.domElement.toDataURL('image/png'), 'screenshot');
       }
     };
 

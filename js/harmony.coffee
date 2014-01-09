@@ -11,7 +11,7 @@ class @Harmony
 		@camera.position.z = 500
 		
 		# @renderer = new THREE.CanvasRenderer()
-		@renderer = new THREE.WebGLRenderer()
+		@renderer = new THREE.WebGLRenderer({preserveDrawingBuffer: true}) # preserveDrawingBuffer: true allows for image exports, but has some performance implications
 
 		@renderer.setSize(window.innerWidth, window.innerHeight)
 		document.body.appendChild(this.renderer.domElement)
@@ -20,8 +20,8 @@ class @Harmony
 		scene = new THREE.Scene()
 
 		@grid = new window.Grid
-			dimensions: new THREE.Vector2(28,10),
-			position: new THREE.Vector3(-2600, -900, -1000),
+			dimensions: new THREE.Vector2(26,10),
+			position: new THREE.Vector3(-2500, -900, -1000),
 			cell_size: new THREE.Vector3(200, 200, 10),
 			materials: [new THREE.MeshBasicMaterial({color: 0xffbb00}), new THREE.MeshBasicMaterial({color: 0xcc9900}), new THREE.MeshBasicMaterial({color: 0xddaa00})]
 

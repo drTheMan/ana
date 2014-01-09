@@ -30,7 +30,7 @@
     };
 
     Grid.prototype.geometry = function() {
-      return this._geometry || (this._geometry = this.options.geometry || new THREE.CubeGeometry(this.cell_size().x, this.cell_size().y, this.cell_size().z));
+      return this._geometry || (this._geometry = this.options.geometry || new THREE.PlaneGeometry(this.cell_size().x, this.cell_size().y));
     };
 
     Grid.prototype.materials = function() {

@@ -15,7 +15,9 @@
     Harmony.prototype.initVfx = function() {
       this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
       this.camera.position.z = 500;
-      this.renderer = new THREE.WebGLRenderer();
+      this.renderer = new THREE.WebGLRenderer({
+        preserveDrawingBuffer: true
+      });
       this.renderer.setSize(window.innerWidth, window.innerHeight);
       return document.body.appendChild(this.renderer.domElement);
     };
@@ -24,8 +26,8 @@
       var scene;
       scene = new THREE.Scene();
       this.grid = new window.Grid({
-        dimensions: new THREE.Vector2(28, 10),
-        position: new THREE.Vector3(-2600, -900, -1000),
+        dimensions: new THREE.Vector2(26, 10),
+        position: new THREE.Vector3(-2500, -900, -1000),
         cell_size: new THREE.Vector3(200, 200, 10),
         materials: [
           new THREE.MeshBasicMaterial({

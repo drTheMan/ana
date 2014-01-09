@@ -10,7 +10,7 @@
     }
 
     DisturbancePicker.prototype.allClasses = function() {
-      return [GridDisturbance, VerticalDisturbance, BumpDisturbance, CircularDisturbance, EqualizerDisturbance];
+      return [HorizontalDisturbance, VerticalDisturbance, BumpDisturbance, CircularDisturbance, EqualizerDisturbance];
     };
 
     DisturbancePicker.prototype.randomClass = function() {
@@ -57,17 +57,17 @@
 
   })();
 
-  this.GridDisturbance = (function(_super) {
-    __extends(GridDisturbance, _super);
+  this.HorizontalDisturbance = (function(_super) {
+    __extends(HorizontalDisturbance, _super);
 
-    function GridDisturbance() {
-      _ref = GridDisturbance.__super__.constructor.apply(this, arguments);
+    function HorizontalDisturbance() {
+      _ref = HorizontalDisturbance.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
-    GridDisturbance.prototype.speed = 0.001;
+    HorizontalDisturbance.prototype.speed = 0.001;
 
-    GridDisturbance.prototype.performStep = function() {
+    HorizontalDisturbance.prototype.performStep = function() {
       var box, i, _i, _len, _ref1, _results;
       _ref1 = this.options.grid.boxes();
       _results = [];
@@ -78,14 +78,14 @@
       return _results;
     };
 
-    GridDisturbance.prototype.done = function() {
+    HorizontalDisturbance.prototype.done = function() {
       if (this.stepCount() * this.speed >= Math.PI) {
         return true;
       }
       return false;
     };
 
-    return GridDisturbance;
+    return HorizontalDisturbance;
 
   })(Disturbance);
 
@@ -116,7 +116,7 @@
     };
 
     VerticalDisturbance.prototype.done = function() {
-      if (this.stepCount() > 0 && this.stepCount() * this.speed >= Math.PI) {
+      if (this.stepCount() * this.speed >= Math.PI) {
         return true;
       }
       return false;

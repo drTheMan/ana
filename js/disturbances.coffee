@@ -1,7 +1,7 @@
 class @DisturbancePicker
 	constructor: (_opts) -> @options = _opts
 
-	allClasses: -> [GridDisturbance, VerticalDisturbance, BumpDisturbance, CircularDisturbance, EqualizerDisturbance]	
+	allClasses: -> [HorizontalDisturbance, VerticalDisturbance, BumpDisturbance, CircularDisturbance, EqualizerDisturbance]	
 	randomClass: -> @allClasses()[Math.floor(Math.random() * @allClasses.length)]
 
 	indexDisturbance: (idx) ->
@@ -27,7 +27,7 @@ class Disturbance
 	done: ->
 
 
-class @GridDisturbance extends Disturbance
+class @HorizontalDisturbance extends Disturbance
 	speed: 0.001
 
 	performStep: ->
@@ -35,9 +35,6 @@ class @GridDisturbance extends Disturbance
 			box.rotation.x += @speed*(i+1)
 
 	done: ->
-		# takes 6283 steps on a 100 cell grid
-		# val = Math.abs(((0.001*@stepCount()) % THREE.Math.PI) - THREE.Math.PI)
-		# return true if @stepCount() > 0 && val < 0.001
 		return true if @stepCount() * @speed >= Math.PI
 		return false
 

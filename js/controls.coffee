@@ -25,7 +25,7 @@ class @Controls
 		# event.stopPropagation()
 		console.log "Keydown (event.which = " + event.which + ")"
 
-		if event.which >= 48 && event.which <= 57
+		if event.which >= 48 && event.which <= 57 # 0 - 9
 			@app().disturbances.push( new DisturbancePicker({grid: @app().grid}).indexDisturbance(event.which - 48) ) 
 
 		if(event.which == 27) # escape
@@ -33,4 +33,9 @@ class @Controls
 			@app().disturbances = []
 			@app().grid.reset();
 
-		@app().togglePause() if event.which == 32
+		@app().togglePause() if event.which == 32 # SPACE
+
+		if event.which == 13 # ENTER
+			@app().renderer.preserveDrawingBuffer = true
+			window.open( @app().renderer.domElement.toDataURL( 'image/png' ), 'screenshot' );
+
