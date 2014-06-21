@@ -55,16 +55,32 @@
     };
 
     Controls.prototype.initGUI = function() {
-      var control, folder;
+      var UiObject, folder, uiobj,
+        _this = this;
+      UiObject = function() {
+        _this.reset = function() {
+          _this.app().disturbances = [];
+          return _this.app().grid.reset();
+        };
+        _this.vSpin = function() {
+          return _this.app().disturbances.push(new DisturbancePicker({
+            grid: _this.app().grid
+          }).indexDisturbance(0));
+        };
+        _this.hSpin = function() {
+          return _this.app().disturbances.push(new DisturbancePicker({
+            grid: _this.app().grid
+          }).indexDisturbance(1));
+        };
+        return _this;
+      };
+      uiobj = new UiObject();
       this.gui = new dat.GUI();
-      folder = this.gui.addFolder('Parameters');
-      control = folder.add({
-        gridPosX: -2200
-      }, 'gridPosX', -3000, 0);
-      control.onChange(function(value) {
-        return console.log("Let's change grid pos to " + value);
-      });
-      return this.gui.addFolder('Actions');
+      folder = this.gui.addFolder('Actions');
+      folder.add(uiobj, 'vSpin');
+      folder.add(uiobj, 'hSpin');
+      folder.add(uiobj, 'reset');
+      return folder.open();
     };
 
     return Controls;

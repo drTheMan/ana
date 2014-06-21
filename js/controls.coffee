@@ -42,11 +42,28 @@ class @Controls
 			window.open( @app().renderer.domElement.toDataURL( 'image/png' ), 'screenshot' );
 
 	initGUI: -> 
-		@gui = new dat.GUI() # ({autoPlace:false});
+		UiObject = =>
+			@reset = =>
+				@app().disturbances = []
+				@app().grid.reset();
+			@vSpin = =>
+				@app().disturbances.push( new DisturbancePicker({grid: @app().grid}).indexDisturbance(0) ) 
+			@hSpin = =>
+				@app().disturbances.push( new DisturbancePicker({grid: @app().grid}).indexDisturbance(1) ) 
+			this
 
-		folder = @gui.addFolder 'Parameters'
-		control = folder.add({gridPosX: -2200}, 'gridPosX', -3000, 0)
-		control.onChange (value) -> console.log "Let's change grid pos to "+value
+		uiobj = new UiObject()
 
-		@gui.addFolder 'Actions'
+		@gui = new dat.GUI() # ({autoPlace:true});
+
+		# folder = @gui.addFolder 'Parameters'
+		# control = folder.add({gridPosX: -2200}, 'gridPosX', -3000, 0)
+		# control.onChange (value) -> console.log "Let's change grid pos to "+value
+
+		folder = @gui.addFolder 'Actions'
+		folder.add(uiobj, 'vSpin')
+		folder.add(uiobj, 'hSpin')
+		folder.add(uiobj, 'reset')
+		folder.open()
+
 
