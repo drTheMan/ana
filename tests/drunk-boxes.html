@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - geometries</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				margin: 0px;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="../js/three.min.js"></script>
+
+		<script>
+			var camera, scene, renderer;
+			var geometry, material, mesh, mesh2, mesh3, mesh4;
+
+			init();
+			animate();
+
+			function init() {
+		    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+		    camera.position.z = 1000;
+
+		    scene = new THREE.Scene();
+
+		    geometry = new THREE.CubeGeometry(200, 200, 200);
+		    material = new THREE.MeshBasicMaterial({
+		        color: 0xff00ff,
+		        wireframe: true
+		    });
+
+		    mesh = new THREE.Mesh(geometry, material);
+		    mesh2 = new THREE.Mesh(geometry, material);
+		    mesh3 = new THREE.Mesh(geometry, material);
+		    mesh4 = new THREE.Mesh(geometry, material);
+
+		    scene.add(mesh);
+		    scene.add(mesh2);
+		    scene.add(mesh3);
+		    scene.add(mesh4);
+
+		    renderer = new THREE.CanvasRenderer();
+		    renderer.setSize(window.innerWidth, window.innerHeight);
+
+		    document.body.appendChild(renderer.domElement);
+			}
+
+			function animate() {
+		    // note: three.js includes requestAnimationFrame shim
+		    requestAnimationFrame(animate);
+
+		    mesh.rotation.x += 0.01;
+		    mesh.rotation.y += 0.02;
+				mesh2.rotation.x -= 0.01;
+		    mesh2.rotation.y -= 0.02;
+				mesh3.rotation.x += 0.02;
+		    mesh3.rotation.y += 0.01;
+				mesh4.rotation.x -= 0.02;
+		    mesh4.rotation.y -= 0.01;
+
+
+		    renderer.render(scene, camera);
+			}
+		</script>
+
+	</body>
+</html>
